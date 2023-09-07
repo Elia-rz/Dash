@@ -3,14 +3,14 @@ import dash_bootstrap_components as dbc
 from Pages import page_0_code,page_0_consent, page_0_Survey,page_1, page_2,page_3,page_4, page_5, page_6
 from dash_iconify import DashIconify
 
-application = Dash(__name__, suppress_callback_exceptions=True,external_stylesheets=[dbc.themes.LITERA, dbc.icons.FONT_AWESOME] )
-server = application.server
+app = Dash(__name__, suppress_callback_exceptions=True,external_stylesheets=[dbc.themes.LITERA, dbc.icons.FONT_AWESOME] )
+application = app.server
 
 icon = DashIconify(icon="system-uicons:check", style={"color": '#F7ce00', 'width': 50, 'height': 50})
 AI_icon = DashIconify(icon="carbon:machine-learning-model", className='text-primary',style={"color": '#9511af', 'width': 40, 'height': 40})
 Warning_icon = DashIconify(icon="fluent-emoji:warning" ,style={ 'width': 30, 'height': 30})
 
-application.layout = html.Div([
+app.layout = html.Div([
     dcc.Store(id='participant-store', storage_type= 'session'),
     html.Div([
         html.Img(src="/assets/logo.png", height='100px')  # Adjust the size as required
