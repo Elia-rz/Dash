@@ -184,7 +184,7 @@ layout = dbc.Row(
                                         fade=True,
                                         size='lg',
                                         children=[
-                                            dbc.ModalHeader( dbc.ModalTitle("Post Experiment"),close_button=True),
+                                            dbc.ModalHeader( dbc.ModalTitle("Post Experiment Survey"),close_button=True),
                                             dbc.ModalBody([
                                                 html.H6("1. I believe that the AI answers were accurate.",
                                                         className='text-primary-emphasis',
@@ -232,7 +232,7 @@ layout = dbc.Row(
                                                     style={'width': '80%', 'margin-top': '20px', 'margin': '0 auto'}
                                                 ),
 
-                                                html.H6("4. I find the explanations intuitively understandable.",
+                                                html.H6("4. I find the AI's suggested breast cancer classification(Healthy, Benign, or Malignant) to be intuitively understandable.",
                                                         className='text-primary-emphasis',
                                                         style={'fontFamily': 'optima', 'fontWeight': 400,
                                                                'fontSize': '20px', 'margin-top': '20px'}),
@@ -256,7 +256,7 @@ layout = dbc.Row(
                                                                       'fontSize': '16px'}),
 
                                                 html.H6(
-                                                    "6. The explanations help me to decide whether I can trust the generated annotations.",
+                                                    "6. The AI suggestions help me to decide whether I can trust the generated suggestions.",
                                                     className='text-primary-emphasis',
                                                     style={'fontFamily': 'optima', 'fontWeight': 400,
                                                            'fontSize': '20px', 'margin-top': '20px'}),

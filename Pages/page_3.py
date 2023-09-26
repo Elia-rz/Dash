@@ -241,7 +241,7 @@ layout = dbc.Row(
                                                     style={'width': '80%', 'margin-top': '20px', 'margin': '0 auto'}
                                                 ),
 
-                                                html.H6("4. I find the explanations intuitively understandable.",
+                                                html.H6("4. I find the AI's suggested breast cancer classification, along with the associated probabilities for each class, to be intuitively understandable.",
                                                         className='text-primary-emphasis',
                                                         style={'fontFamily': 'optima', 'fontWeight': 400,
                                                                'fontSize': '20px', 'margin-top': '20px'}),
@@ -265,7 +265,7 @@ layout = dbc.Row(
                                                                       'fontSize': '16px'}),
 
                                                 html.H6(
-                                                    "6. The explanations help me to decide whether I can trust the generated annotations.",
+                                                    "6. The explanations help me to decide whether I can trust the generated suggestions.",
                                                     className='text-primary-emphasis',
                                                     style={'fontFamily': 'optima', 'fontWeight': 400,
                                                            'fontSize': '20px', 'margin-top': '20px'}),
