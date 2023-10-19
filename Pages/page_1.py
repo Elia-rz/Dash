@@ -74,7 +74,7 @@ layout = dbc.Row(
                                                     lineColor='red',
                                                     image_content=image_paths[0],
                                                     width=350,
-                                                    hide_buttons=['line', 'zoom', 'pan', 'rectangle', 'circle', 'polygon', 'text', 'download',
+                                                    hide_buttons=['line', 'pan', 'rectangle', 'circle', 'polygon', 'text', 'download',
                                                                   'polygon', 'select']
                                                 ),
                             dbc.Label([Warning_icon, "   Don't forget to save!"],
