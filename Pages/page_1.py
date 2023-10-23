@@ -13,7 +13,7 @@ from dash.exceptions import PreventUpdate
 
 # dash.register_page(__name__, name='Baseline')
 
-icon = DashIconify(icon="system-uicons:check", style={"color": '#F7ce00', 'width': 50, 'height': 50})
+icon = DashIconify(icon="system-uicons:checkbox-checked", style={"color": '#F7ce00', 'width': 50, 'height': 50})
 Warning_icon = DashIconify(icon="fluent-emoji:warning" ,style={ 'width': 30, 'height': 30})
 
 # Define the image paths

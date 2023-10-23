@@ -30,7 +30,7 @@ image_paths2 = [
 
 # dash.register_page(__name__, name='2nd Condition')
 
-icon = DashIconify(icon="system-uicons:check", style={"color": '#F7ce00', 'width': 50, 'height': 50})
+icon = DashIconify(icon="system-uicons:checkbox-checked", style={"color": '#F7ce00', 'width': 50, 'height': 50})
 AI_icon = DashIconify(icon="carbon:machine-learning-model", className='text-primary' ,style={'width': 40, 'height': 40})
 Warning_icon = DashIconify(icon="fluent-emoji:warning" ,style={ 'width': 30, 'height': 30})
 
