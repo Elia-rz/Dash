@@ -304,7 +304,8 @@ layout = dbc.Row(
 
 @callback(
     Output('modal1', 'is_open'),
-    [Input('agreement-slider1', 'value'), Input('close-modal1', 'n_clicks')],
+    [Input('agreement-slider1', 'value'),
+     Input('close-modal1', 'n_clicks')],
     [State('modal1', 'is_open')]
 )
 def toggle_modal(agreement_value, close_clicks, is_open):
@@ -316,8 +317,8 @@ def toggle_modal(agreement_value, close_clicks, is_open):
         if trigger_id == 'agreement-slider1' and agreement_value is not None and agreement_value < 3:
             return True
         elif trigger_id == 'close-modal1':
-            return not is_open
-    return False
+            return False  # Close the modal when the close button is clicked
+    return is_open
 
 
 @callback(
@@ -367,13 +368,19 @@ def update_canvas_image(json_data1, next_clicks1, agreement1, opinion1,trust1, c
     # If "Next" button was clicked, calculate the index of the next image
     if triggered_component_id == 'next-button1':
         current_image_index1 = (current_image_index1 + 1) % len(image_paths1)
+
+
+
     # Get the content of the next image
     next_image_content1 = image_paths1[current_image_index1]
-
-    # Reset the selected item for the next image
     agreement1 = None
     opinion1 = None
     trust1 = None
+
+
+
+    # Reset the selected item for the next image
+
     # Show or hide buttons based on the current image index
     submit_button_style = {'display': 'none'}
     next_button_style = {'display': 'block','fontFamily': 'optima', 'fontWeight': 600, 'fontSize': '16px','width': '11%', "marginLeft": "90%", "margin-top": "10px"}

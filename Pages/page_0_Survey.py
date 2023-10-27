@@ -81,7 +81,7 @@ layout = dbc.Container([
             dcc.RadioItems(id= 'AI-recommendation',options=['Yes','No'], inline = True,labelClassName="mt-1 m-3",style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '16px'}),
 
             html.H6("5. To what extent do you trust AI systems to provide accurate and reliable information in oncology/radiology?", className= 'text-primary-emphasis',style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '20px','margin-top': '20px'}),
-            dcc.RadioItems(id = 'AI-trust' ,options =['Not at all','A little bit','Somewhat', 'Familiar','Completely familiar'], inline = True,labelClassName="mt-1 m-3",style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '16px'}),
+            dcc.RadioItems(id = 'AI-trust' ,options =['Not at all','A little bit','Somewhat', 'Quite a bit','Completely'], inline = True,labelClassName="mt-1 m-3",style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '16px'}),
 
             html.H6("6. Please indicate your level of agreement with the following statements:", className= 'text-primary-emphasis',style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '20px','margin-top': '20px'}),
             dcc.Markdown(''' * Artificial Intelligence will play an important role in the future of medicine. ''',style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '18px'}),

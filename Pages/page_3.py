@@ -375,13 +375,13 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
     # If "Next" button was clicked, calculate the index of the next image
     if triggered_component_id == 'next-button2':
         current_image_index2 = (current_image_index2 + 1) % len(image_paths2)
+        # Reset the selected item for the next image
+
 
     # Get the content of the next image
     next_image_content2 = image_paths2[current_image_index2]
-
-    # Reset the selected item for the next image
-    agreement = None
     opinion = None
+    agreement = None
     trust = None
 
     # Show or hide buttons based on the current image index
