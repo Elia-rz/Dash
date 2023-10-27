@@ -465,6 +465,8 @@ def save_data_to_csv(submit_clicks,code,q1,q2,q3,q4,q5,q6,q7):
 
     global current_image_index2
     current_image_index2 = 0
+    data_list2.clear()
+    survey2.clear()
     # Reset the submit button click count to 0
     return 0 , "* Thanks! Please go to the third condition of the experiment from the top of the page! "
 

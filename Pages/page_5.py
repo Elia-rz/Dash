@@ -504,6 +504,8 @@ def save_data_to_csv(submit_clicks,code,q1,q2,q3,q4,q5,q6,q7):
 
     global current_image_index4
     current_image_index4 = 0
+    data_list4.clear()
+    survey4.clear()
     # Reset the submit button click count to 0
     return 0
 
