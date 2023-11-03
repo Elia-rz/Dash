@@ -215,7 +215,7 @@ layout = dbc.Row(
                                                 ),
 
                                                 html.H6(
-                                                    "3. How insecure, discouraged, irritated, stressed, and annoyed were you?",
+                                                    "3. How  stressed, and annoyed were you?",
                                                     className='text-primary-emphasis',
                                                     style={'fontFamily': 'optima', 'fontWeight': 400,
                                                            'fontSize': '20px','margin-top': '20px'}),
@@ -460,8 +460,6 @@ def save_data_to_csv(submit_clicks,code,q1,q2,q3,q4,q5,q6,q7):
 
     global current_image_index1
     current_image_index1 = 0
-    data_list1.clear()
-    survey1.clear()
     # Reset the submit button click count to 0
     return 0, "* Thanks! Please go to the second condition of the experiment from the top of the page! "
 
