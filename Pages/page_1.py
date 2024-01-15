@@ -18,16 +18,16 @@ Warning_icon = DashIconify(icon="fluent-emoji:warning" ,style={ 'width': 30, 'he
 
 # Define the image paths
 image_paths= [
+    "/assets/Main/Main_60.png",
+    "/assets/Main/Main_23.png",
+    "/assets/Main/Main_8.png",
+    "/assets/Main/Main_28.png",
     "/assets/Main/Main_0.png",
-    "/assets/Main/Main_1.png",
-    "/assets/Main/Main_2.png",
-    "/assets/Main/Main_3.png",
+    "/assets/Main/Main_21.png",
+    "/assets/Main/Main_26.png",
     "/assets/Main/Main_4.png",
     "/assets/Main/Main_5.png",
-    "/assets/Main/Main_6.png",
-    "/assets/Main/Main_7.png",
-    "/assets/Main/Main_8.png",
-    "/assets/Main/Main_10.png"
+    "/assets/Main/Main_62.png"
 ]
 
 # Define the layout

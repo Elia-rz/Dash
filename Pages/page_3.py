@@ -13,16 +13,16 @@ import datetime
 df1 = pd.read_csv('EXP_1.csv')
 
 image_paths2 = [
-    "/assets/Main/Main_22.png",
-    "/assets/Main/Main_24.png",
-    "/assets/Main/Main_25.png",
-    "/assets/Main/Main_26.png",
-    "/assets/Main/Main_27.png",
-    "/assets/Main/Main_28.png",
-    "/assets/Main/Main_30.png",
-    "/assets/Main/Main_37.png",
-    "/assets/Main/Main_41.png",
-    "/assets/Main/Main_52.png"
+    "/assets/Main/Main_95.png",
+    "/assets/Main/Main_58.png",
+    "/assets/Main/Main_14.png",
+    "/assets/Main/Main_101.png",
+    "/assets/Main/Main_68.png",
+    "/assets/Main/Main_17.png",
+    "/assets/Main/Main_56.png",
+    "/assets/Main/Main_94.png",
+    "/assets/Main/Main_13.png",
+    "/assets/Main/Main_98.png"
 ]
 
 
@@ -398,7 +398,7 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
 
     if label == 0:
         x = 'This image shows Benign Tumor!'
-    elif label == 1:
+    elif label == 2:
         x = 'This image shows Malignant Tumor!'
     else:
         x = 'This image shows Healthy Tissue!'

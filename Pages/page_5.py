@@ -13,29 +13,29 @@ import datetime
 df3 = pd.read_csv('EXP_1.csv')
 
 image_paths4 = [
-    "/assets/Main/Main_48.png",
-    "/assets/Main/Main_49.png",
-    "/assets/Main/Main_50.png",
-    "/assets/Main/Main_51.png",
-    "/assets/Main/Main_53.png",
-    "/assets/Main/Main_55.png",
-    "/assets/Main/Main_56.png",
-    "/assets/Main/Main_75.png",
-    "/assets/Main/Main_83.png",
-    "/assets/Main/Main_98.png",
+    "/assets/Main/Main_3.png",
+    "/assets/Main/Main_93.png",
+    "/assets/Main/Main_41.png",
+    "/assets/Main/Main_96.png",
+    "/assets/Main/Main_15.png",
+    "/assets/Main/Main_32.png",
+    "/assets/Main/Main_99.png",
+    "/assets/Main/Main_73.png",
+    "/assets/Main/Main_30.png",
+    "/assets/Main/Main_34.png",
 ]
 
 result_paths4 = [
-    "/assets/Result1/result1_48.png",
-    "/assets/Result1/result1_49.png",
-    "/assets/Result1/result1_50.png",
-    "/assets/Result1/result1_51.png",
-    "/assets/Result1/result1_53.png",
-    "/assets/Result1/result1_55.png",
-    "/assets/Result1/result1_56.png",
-    "/assets/Result1/result1_75.png",
-    "/assets/Result1/result1_83.png",
-    "/assets/Result1/result1_98.png",
+    "/assets/Result1/result1_3.png",
+    "/assets/Result1/result1_93.png",
+    "/assets/Result1/result1_41.png",
+    "/assets/Result1/result1_96.png",
+    "/assets/Result1/result1_15.png",
+    "/assets/Result1/result1_32.png",
+    "/assets/Result1/result1_99.png",
+    "/assets/Result1/result1_73.png",
+    "/assets/Result1/result1_30.png",
+    "/assets/Result1/result1_34.png",
 ]
 
 
@@ -439,7 +439,7 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
 
     if label == 0:
         x = 'This image shows Benign Tumor!'
-    elif label == 1:
+    elif label == 2:
         x = 'This image shows Malignant Tumor!'
     else:
         x = 'This image shows Healthy Tissue!'
