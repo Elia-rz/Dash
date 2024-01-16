@@ -192,7 +192,7 @@ def save_data_to_csv(submit_clicks, code):
         filename = f'baseline_{participant_code}.csv'
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Image Path', 'Selected Item', 'JSON Data'])
+            writer.writerow(['Image Path', 'date','time','Selected Item', 'JSON Data'])
             writer.writerows(data_list)
 
         global current_image_index

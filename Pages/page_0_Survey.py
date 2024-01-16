@@ -3,17 +3,19 @@ from dash import html, dcc, Output, Input, State, callback
 from dash import dcc, callback
 from dash import html
 import csv
+import datetime
 import dash_bootstrap_components as dbc
 import pandas as pd
 import json
+survey_start_time = None
+survey_end_time = None
 
-
-column_names = [ 'Age',
+column_names = [ 'Code','start','end','Duration' ,'Age',
                  'Gender', 'race', 'job', 'other_job', 'experience',
                 'AI-familiarity', 'AI-recommendation', 'AI-trust', 'AI-role', 'complexity', 'AI-usefulness'
                  ]
 
-required_fields = ['Age',
+required_fields = ['Code','end_time','Duration','Age',
                    'Gender', 'race', 'job', 'experience',
                 'AI-familiarity', 'AI-recommendation', 'AI-trust', 'AI-role', 'complexity', 'AI-usefulness'
                    ]
@@ -133,12 +135,10 @@ layout = dbc.Container([
 @callback(
     Output("submit-button", "disabled"),
     [
-        # Input("code-input", "value"),
         Input("age-input", "value"),
         Input("gender", "value"),
         Input("Race-dropdown", "value"),
         Input("job", "value"),
-        Input("Job-input", "value"),
         Input("experience-input", "value"),
         Input("AI-familiarity", "value"),
         Input("AI-recommendation", "value"),
@@ -148,13 +148,20 @@ layout = dbc.Container([
         Input("AI-usefulness", "value")
     ]
 )
-def toggle_button_state( age, gender, race, job, other_job, experience, familiarity, recom, trust, role,
-                        complexity, usefulness):
-    inputs = [ age, gender, race, job, other_job, experience, familiarity, recom, trust, role, complexity,
-              usefulness]
+def toggle_button_state(age, gender, race, job, experience, familiarity, recom, trust, role, complexity, usefulness):
+    global survey_start_time  # Access the global variable
 
-    if any(input_value is None or str(input_value).strip() == '' for input_value, field in zip(inputs, column_names) if
-           field in required_fields):
+    if survey_start_time is None:
+        survey_start_time = datetime.datetime.now()  # Record the start time
+
+    # Define a list of required fields, excluding "other jobs"
+    required_fields_without_other_job = ['Age', 'Gender', 'race', 'job', 'experience', 'AI-familiarity',
+                                          'AI-recommendation', 'AI-trust', 'AI-role', 'complexity', 'AI-usefulness']
+
+    # Check if any of the required fields are empty
+    if any(input_value is None or str(input_value).strip() == '' for input_value, field in zip(
+            [age, gender, race, job, experience, familiarity, recom, trust, role, complexity, usefulness],
+            column_names) if field in required_fields_without_other_job):
         return True  # If any required field is empty, the button will remain disabled
     else:
         return False
@@ -184,7 +191,15 @@ def toggle_button_state( age, gender, race, job, other_job, experience, familiar
 
 def submit_email(n_clicks, code, age, gender, race, job, other_job, experience, familiarity, recom, trust, role,
                         complexity, usefulness):
-    inputs = [ age, gender, race, job, other_job, experience, familiarity, recom, trust, role, complexity,
+    global survey_end_time  # Access the global variable
+
+    if n_clicks > 0:
+        survey_end_time = datetime.datetime.now()
+
+    if survey_start_time is not None and survey_end_time is not None:
+        survey_duration = survey_end_time - survey_start_time
+
+    inputs = [ code, survey_end_time,survey_end_time,survey_duration, gender, race, job, other_job, experience, familiarity, recom, trust, role, complexity,
               usefulness]
     if n_clicks>0 :
         print("Data from store:", code)

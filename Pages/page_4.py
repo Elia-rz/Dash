@@ -218,6 +218,31 @@ layout = dbc.Row(
                                                                                    "marginLeft": "0%",
                                                                                    "margin-top": "10px"}),
 
+                            dbc.Modal(
+                                        id='modal3-2',
+                                        backdrop="static",
+                                        is_open=False,
+                                        centered=True,
+                                        fade=True,
+                                        size='lg',
+                                        children=[
+                                            dbc.ModalHeader( dbc.ModalTitle("Do you trust this AI-based Clinical Decision Support System (CDSS) for breast cancer diagnosis?"),close_button=False),
+                                            dbc.ModalBody(
+                                                dbc.RadioItems(
+                                                    id='trust or not3',
+                                                    options=[
+                                                        {'label': 'Trust', 'value': 'Trust'},
+                                                        {'label': 'Do not Trust', 'value': 'Do not Trust'}
+                                                    ],
+                                                    value='',
+                                                    inline= True
+                                                )
+                                            ),
+                                            dbc.ModalFooter(
+                                                dbc.Button("Submit", id="close-modal3-2", className="btn btn-info",style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '20px'})
+                                            )
+                                        ],
+                            ),
 
 
                             dbc.Modal(
@@ -360,6 +385,34 @@ def toggle_modal(agreement_value, close_clicks, is_open):
             return not is_open
     return False
 
+
+@callback(
+    Output("modal3-2", "is_open"),
+    [Input("next-button3", "n_clicks"), Input("close-modal3-2", "n_clicks")],
+    [State("modal3-2", "is_open")]
+)
+def toggle_modal(next_clicks, close_clicks, is_open):
+    # Identify which input was triggered
+    ctx = dash.callback_context
+
+    # If no input has been triggered yet, do nothing
+    if not ctx.triggered:
+        return is_open
+
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    # Open the modal when 'next-button2' has been clicked 3 times
+    if button_id == 'next-button3' and next_clicks == 5:
+        return True
+
+    # Close the modal when 'close-modal2' is clicked
+    elif button_id == 'close-modal3-2':
+        return False
+
+    # In other cases, retain the current state
+    return is_open
+
+
 @callback(
     Output("modal3_1", "is_open"),
     [Input("submit-button4", "n_clicks"), Input("close-modal3_1", "n_clicks")],
@@ -379,6 +432,7 @@ survey3 = []
     Output('canvas4', 'image_content'),
     Output('agreement-slider3', 'value'),
     Output('user-opinion3', 'value'),
+    Output('trust or not3','value'),
     Output('trust-slider3', 'value'),
     # Output('save-button3', 'style'),
     Output('next-button3', 'style'),
@@ -390,11 +444,12 @@ survey3 = []
     Input('next-button3', 'n_clicks'),
     State('agreement-slider3', 'value'),
     State('user-opinion3', 'value'),
+    State('trust or not3','value'),
     State('trust-slider3','value'),
     State('canvas4', 'image_content'),
     prevent_initial_call=False  # Allow the callback to run on initial loading
 )
-def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, current_image):
+def update_canvas_image(json_data, next_clicks, agreement, opinion, trustlevel3,trust, current_image):
     global current_image_index3
     global data_list3
 
@@ -405,7 +460,7 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
 
     # If "Save Data" button was clicked, save the data for the current image to the list
 
-    data_list3.append([current_image, time_current.strftime('%Y-%m-%d'), time_current.strftime('%I:%M:%S %p'), agreement, opinion, trust, json_data])
+    data_list3.append([current_image, time_current.strftime('%Y-%m-%d'), time_current.strftime('%I:%M:%S %p'), agreement, opinion,trustlevel3, trust, json_data])
 
     # If "Next" button was clicked, calculate the index of the next image
     if triggered_component_id == 'next-button3':
@@ -418,6 +473,7 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
     next_result_content3 = result_paths3[current_image_index3]
     opinion = None
     agreement = None
+    trustlevel3 = None
     trust = None
 
     # Show or hide buttons based on the current image index
@@ -439,7 +495,7 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
     else:
         x = 'This image shows Healthy Tissue!'
 
-    return next_image_content3, agreement, opinion, trust, next_button_style, submit_button_style, x, next_result_content3
+    return next_image_content3, agreement, opinion,trustlevel3, trust, next_button_style, submit_button_style, x, next_result_content3
 
 column_names3 = ['q3-1','q3-2','q3-3','q3-4','q3-5','q3-6','q3-7']
 required_fields3 = ['q3-1','q3-2','q3-3','q3-4','q3-5','q3-6','q3-7']

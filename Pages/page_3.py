@@ -124,6 +124,32 @@ layout = dbc.Row(
                                         ],
                             ),
 
+                            dbc.Modal(
+                                        id='modal2-2',
+                                        backdrop="static",
+                                        is_open=False,
+                                        centered=True,
+                                        fade=True,
+                                        size='lg',
+                                        children=[
+                                            dbc.ModalHeader( dbc.ModalTitle("Do you trust this AI-based Clinical Decision Support System (CDSS) for breast cancer diagnosis?"),close_button=False),
+                                            dbc.ModalBody(
+                                                dbc.RadioItems(
+                                                    id='trust or not2',
+                                                    options=[
+                                                        {'label': 'Trust', 'value': 'Trust'},
+                                                        {'label': 'Do not Trust', 'value': 'Do not Trust'}
+                                                    ],
+                                                    value='',
+                                                    inline= True
+                                                )
+                                            ),
+                                            dbc.ModalFooter(
+                                                dbc.Button("Submit", id="close-modal2-2", className="btn btn-info",style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '20px'})
+                                            )
+                                        ],
+                            ),
+
                             html.Label('How much do you trust the AI suggestion?',
                                        style={'margin-top': '20px','font-style': 'italic', 'text-align': 'center','fontFamily': 'optima','fontWeight': 500, 'fontSize': '18px'},
                                        className= 'text-primary'),
@@ -323,9 +349,35 @@ def toggle_modal(agreement_value, close_clicks, is_open):
         trigger_id = ctx.triggered[0]['prop_id'].split('.')[0]
         if trigger_id == 'agreement-slider2' and agreement_value is not None and agreement_value < 3:
             return True
-        elif trigger_id == 'close-modal1':
+        elif trigger_id == 'close-modal':
             return not is_open
     return False
+
+@callback(
+    Output("modal2-2", "is_open"),
+    [Input("next-button2", "n_clicks"), Input("close-modal2-2", "n_clicks")],
+    [State("modal2-2", "is_open")]
+)
+def toggle_modal(next_clicks, close_clicks, is_open):
+    # Identify which input was triggered
+    ctx = dash.callback_context
+
+    # If no input has been triggered yet, do nothing
+    if not ctx.triggered:
+        return is_open
+
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    # Open the modal when 'next-button2' has been clicked 3 times
+    if button_id == 'next-button2' and next_clicks == 3:
+        return True
+
+    # Close the modal when 'close-modal2' is clicked
+    elif button_id == 'close-modal2-2':
+        return False
+
+    # In other cases, retain the current state
+    return is_open
 
 
 @callback(
@@ -346,6 +398,7 @@ survey2 = []
     Output('canvas3', 'image_content'),
     Output('agreement-slider2', 'value'),
     Output('user-opinion2', 'value'),
+    Output('trust or not2', 'value'),
     Output('trust-slider2', 'value'),
     # Output('save-button2', 'style'),
     Output('next-button2', 'style'),
@@ -356,11 +409,12 @@ survey2 = []
     Input('next-button2', 'n_clicks'),
     State('agreement-slider2', 'value'),
     State('user-opinion2', 'value'),
+    State('trust or not2', 'value'),
     State('trust-slider2','value'),
     State('canvas3', 'image_content'),
     prevent_initial_call=False  # Allow the callback to run on initial loading
 )
-def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, current_image):
+def update_canvas_image(json_data, next_clicks, agreement, opinion,trust_level, trust, current_image):
     global current_image_index2
     global data_list2
 
@@ -370,7 +424,7 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
     time_current = datetime.datetime.now()
 
     # If "Save Data" button was clicked, save the data for the current image to the list
-    data_list2.append([current_image, time_current.strftime('%Y-%m-%d'), time_current.strftime('%I:%M:%S %p'), agreement, opinion, trust, json_data])
+    data_list2.append([current_image, time_current.strftime('%Y-%m-%d'), time_current.strftime('%I:%M:%S %p'), agreement, opinion,trust_level, trust, json_data])
 
     # If "Next" button was clicked, calculate the index of the next image
     if triggered_component_id == 'next-button2':
@@ -380,6 +434,7 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
 
     # Get the content of the next image
     next_image_content2 = image_paths2[current_image_index2]
+    trust_level = None
     opinion = None
     agreement = None
     trust = None
@@ -403,7 +458,7 @@ def update_canvas_image(json_data, next_clicks, agreement, opinion, trust, curre
     else:
         x = 'This image shows Healthy Tissue!'
 
-    return next_image_content2, agreement, opinion, trust, next_button_style, submit_button_style, x
+    return next_image_content2, agreement, opinion, trust,trust_level, next_button_style, submit_button_style, x
 
 
 column_names2 = ['q2-1','q2-2','q2-3','q2-4','q2-5','q2-6','q2-7']
@@ -453,7 +508,7 @@ def save_data_to_csv(submit_clicks,code,q1,q2,q3,q4,q5,q6,q7):
         filename = f'2nd_condition_{participant_code}.csv'
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Image Path','date','time', 'agreement', 'opinion','trust', 'JSON Data'])
+            writer.writerow(['Image Path','date','time', 'agreement', 'opinion','trust Level','trust', 'JSON Data'])
             writer.writerows(data_list2)
 
         filename1 = f'2nd_survey_{participant_code}.csv'

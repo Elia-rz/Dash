@@ -118,6 +118,8 @@ layout = dbc.Row(
                                         ],
                                     ),
 
+
+
                             html.Label('How much do you trust the AI suggestion?',
                                        style={'margin-top': '20px','font-style': 'italic', 'text-align': 'center','fontFamily': 'optima','fontWeight': 500, 'fontSize': '18px'},
                                        className= 'text-primary'),
@@ -177,6 +179,33 @@ layout = dbc.Row(
                                                                          "marginLeft": "0%", "margin-top": "10px"}),
 
                             dbc.Modal(
+                                        id='modal1-2',
+                                        backdrop="static",
+                                        is_open=False,
+                                        centered=True,
+                                        fade=True,
+                                        size='lg',
+                                        children=[
+                                            dbc.ModalHeader( dbc.ModalTitle("Do you trust this AI-based Clinical Decision Support System (CDSS) for breast cancer diagnosis?"),close_button=False),
+                                            dbc.ModalBody(
+                                                dbc.RadioItems(
+                                                    id='trust or not1',
+                                                    options=[
+                                                        {'label': 'Trust', 'value': 'Trust'},
+                                                        {'label': 'Do not Trust', 'value': 'Do not Trust'}
+                                                    ],
+                                                    value='',
+                                                    inline= True
+                                                )
+                                            ),
+                                            dbc.ModalFooter(
+                                                dbc.Button("Submit", id="close-modal1-2", className="btn btn-info",style={'fontFamily': 'optima','fontWeight': 400, 'fontSize': '20px'})
+                                            )
+                                        ],
+                            ),
+
+
+                            dbc.Modal(
                                         id='modal1_1',
                                         backdrop="static",
                                         is_open=False,
@@ -215,7 +244,7 @@ layout = dbc.Row(
                                                 ),
 
                                                 html.H6(
-                                                    "3. How  stressed, and annoyed were you?",
+                                                    "3. How  stressed were you?",
                                                     className='text-primary-emphasis',
                                                     style={'fontFamily': 'optima', 'fontWeight': 400,
                                                            'fontSize': '20px','margin-top': '20px'}),
@@ -320,6 +349,32 @@ def toggle_modal(agreement_value, close_clicks, is_open):
             return False  # Close the modal when the close button is clicked
     return is_open
 
+@callback(
+    Output("modal1-2", "is_open"),
+    [Input("next-button1", "n_clicks"), Input("close-modal1-2", "n_clicks")],
+    [State("modal1-2", "is_open")]
+)
+def toggle_modal(next_clicks, close_clicks, is_open):
+    # Identify which input was triggered
+    ctx = dash.callback_context
+
+    # If no input has been triggered yet, do nothing
+    if not ctx.triggered:
+        return is_open
+
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    # Open the modal when 'next-button2' has been clicked 3 times
+    if button_id == 'next-button1' and next_clicks == 8:
+        return True
+
+    # Close the modal when 'close-modal2' is clicked
+    elif button_id == 'close-modal1-2':
+        return False
+
+    # In other cases, retain the current state
+    return is_open
+
 
 @callback(
     Output("modal1_1", "is_open"),
@@ -341,6 +396,7 @@ survey1 = []
     Output('canvas2', 'image_content'),
     Output('agreement-slider1', 'value'),
     Output('user-opinion1', 'value'),
+    Output('trust or not1','value'),
     Output('trust-slider1', 'value'),
     Output('next-button1', 'style'),
     Output('submit-button2', 'style'),
@@ -349,11 +405,12 @@ survey1 = []
     Input('next-button1', 'n_clicks'),
     State('agreement-slider1', 'value'),
     State('user-opinion1', 'value'),
+    State('trust or not1', 'value'),
     State('trust-slider1','value'),
     State('canvas2', 'image_content'),
     prevent_initial_call=True
 )
-def update_canvas_image(json_data1, next_clicks1, agreement1, opinion1,trust1, current_image1):
+def update_canvas_image(json_data1, next_clicks1, agreement1, opinion1,trustlevel1,trust1, current_image1):
     global current_image_index1
     global data_list1
 
@@ -363,7 +420,7 @@ def update_canvas_image(json_data1, next_clicks1, agreement1, opinion1,trust1, c
     time_current = datetime.datetime.now()
     # If "Save Data" button was clicked, save the data for the current image to the list
 
-    data_list1.append([current_image1,time_current.strftime('%Y-%m-%d '), time_current.strftime('%I:%M:%S %p'), agreement1, opinion1,trust1, json_data1])
+    data_list1.append([current_image1,time_current.strftime('%Y-%m-%d '), time_current.strftime('%I:%M:%S %p'), agreement1, opinion1,trustlevel1,trust1, json_data1])
 
     # If "Next" button was clicked, calculate the index of the next image
     if triggered_component_id == 'next-button1':
@@ -375,6 +432,7 @@ def update_canvas_image(json_data1, next_clicks1, agreement1, opinion1,trust1, c
     next_image_content1 = image_paths1[current_image_index1]
     agreement1 = None
     opinion1 = None
+    trustlevel1 = None
     trust1 = None
 
 
@@ -397,7 +455,8 @@ def update_canvas_image(json_data1, next_clicks1, agreement1, opinion1,trust1, c
     else:
         x = 'This image shows Healthy Tissue!'
 
-    return next_image_content1, agreement1, opinion1, trust1,  next_button_style, submit_button_style,x
+    return next_image_content1, agreement1, opinion1,trustlevel1, trust1,  next_button_style, submit_button_style, x
+
 
 column_names1 = ['q1-1','q1-2','q1-3','q1-4','q1-5','q1-6','q1-7']
 required_fields1 = ['q1-1','q1-2','q1-3','q1-4','q1-5','q1-6','q1-7']

@@ -50,4 +50,4 @@ def get_participant_code(data):
         return None
 
 if __name__ == '__main__':
-    application.run(debug=True, port= 8080)
+    application.run(debug=True, port= 5080)
