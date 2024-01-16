@@ -181,19 +181,20 @@ def update_canvas_image(json_data, next_clicks,selected_item, current_image):
     Output('submit-button1', 'n_clicks'),
     Input('submit-button1', 'n_clicks'),
     Input('participant-store', 'data'),
-
     prevent_initial_call=True
 )
 def save_data_to_csv(submit_clicks, code):
-
     if submit_clicks > 0:
         print("Data from store:", code)
         participant_code = code.get('code') if code else None
         filename = f'baseline_{participant_code}.csv'
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Image Path', 'date','time','Selected Item', 'JSON Data'])
-            writer.writerows(data_list)
+            writer.writerow(['Code', 'Image Path', 'date', 'time', 'Selected Item', 'JSON Data'])
+
+            # Prepend the participant code to each sublist in data_list
+            combined_data = [[participant_code] + row for row in data_list]
+            writer.writerows(combined_data)
 
         global current_image_index
         current_image_index = 0
@@ -201,6 +202,7 @@ def save_data_to_csv(submit_clicks, code):
 
     # Reset the submit button click count to 0
     return 0
+
 
 
 

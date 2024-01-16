@@ -546,15 +546,17 @@ def save_data_to_csv(submit_clicks,code,q1,q2,q3,q4,q5,q6,q7):
         filename = f'4th_condition_{participant_code}.csv'
         with open(filename, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['Image Path','date','time', 'agreement', 'opinion','trust', 'JSON Data'])
-            writer.writerows(data_list4)
+            writer.writerow(['Code','Image Path','date','time', 'agreement', 'opinion','Trustlevel','trust', 'JSON Data'])
+            combined_data4 = [[participant_code] + row for row in data_list4]
+            writer.writerows(combined_data4)
 
         filename1 = f'4th_survey_{participant_code}.csv'
         with open(filename1, 'w', newline='') as csvfile:
             writer = csv.writer(csvfile)
             survey4.append([q1,q2,q3,q4,q5,q6,q7])
-            writer.writerow(['q1','q2','q3','q4','q5','q6','q7'])
-            writer.writerows(survey4)
+            writer.writerow(['Code','q1','q2','q3','q4','q5','q6','q7'])
+            combined_data4_2 = [[participant_code] + row for row in survey4]
+            writer.writerows(combined_data4_2)
 
     global current_image_index4
     current_image_index4 = 0
