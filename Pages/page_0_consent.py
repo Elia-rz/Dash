@@ -138,9 +138,21 @@ layout = dbc.Row(
                                 options=['   I agree'],
 
                             ),
-                        dbc.Button("Start", href="/page_0_Survey", id="proceed-button", disabled=True,className="btn btn-warning",style={'fontFamily': 'optima','fontWeight': 600, 'fontSize': '20px','margin-left': '850px'})
-                        # html.Button("Proceed", id="proceed-button", disabled=True)
-
+                            dbc.Row(
+                                [
+                                    # Empty column to push the button to the right
+                                    dbc.Col(width=10),
+                                    # Column for the button
+                                    dbc.Col(
+                                        dbc.Button("Start", href="/page_0_Survey", id="proceed-button", disabled=True,
+                                                   className="btn btn-warning",
+                                                   style={'fontFamily': 'optima', 'fontWeight': 600,
+                                                          'fontSize': '20px'}),
+                                        width=2 # Adjust the width as needed
+                                    ),
+                                ],
+                                justify="end",  # Align items to the end (right)
+                            )
                         ],className="text-body text-justify text-left",
                                 style={'fontFamily': 'optima', 'fontWeight': 600, 'fontSize': '16px',"margin-left": "25px"})
             ],
