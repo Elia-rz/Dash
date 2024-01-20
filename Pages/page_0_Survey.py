@@ -199,7 +199,7 @@ def submit_email(n_clicks, code, age, gender, race, job, other_job, experience, 
     if survey_start_time is not None and survey_end_time is not None:
         survey_duration = survey_end_time - survey_start_time
 
-    inputs = [ code, survey_end_time,survey_end_time,survey_duration, gender, race, job, other_job, experience, familiarity, recom, trust, role, complexity,
+    inputs = [ code, survey_end_time,survey_end_time,survey_duration,age, gender, race, job, other_job, experience, familiarity, recom, trust, role, complexity,
               usefulness]
     if n_clicks>0 :
         print("Data from store:", code)
