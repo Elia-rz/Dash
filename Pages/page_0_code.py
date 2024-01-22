@@ -9,8 +9,8 @@ layout = dbc.Row(
                 dbc.CardHeader(html.H4("Welcome to our experiment!", className="card-title text-info", style={'fontFamily': 'optima', 'fontWeight': 400, 'fontSize': '30px'})),
                 dbc.CardBody(
                     [
-                        html.P("Please enter the unique participant code provided to you in the email.", className="text-dark", style={'fontFamily': 'optima', 'fontWeight': 400, 'fontSize': '18px'}),
-                        dbc.Input(type="code", id="participant_code", placeholder="Enter Your Participant Code", style={'fontFamily': 'optima', 'fontSize': '16px'}),
+                        html.P("Please enter your e-mail address.", className="text-dark", style={'fontFamily': 'optima', 'fontWeight': 400, 'fontSize': '18px'}),
+                        dbc.Input(type="email", id="participant_code", placeholder="Enter your email", style={'fontFamily': 'optima', 'fontSize': '16px'}),
                         html.Br(),
                         dbc.Button("Submit", id="code-submit-button",href = "/page_0_consent",n_clicks=0,disabled= True, className="btn btn-info", style={'fontFamily': 'optima', 'fontWeight': 600, 'fontSize': '18px'}),
                         html.Div(id="code-submit-output", className="text-center text-info", style={'fontFamily': 'optima', 'fontWeight': 500, 'fontSize': '18px'})
@@ -29,8 +29,10 @@ layout = dbc.Row(
     Output('code-submit-button', 'disabled'),
     Input('participant_code', 'value')
 )
-def enable_submit_button(input_value):
-    return not bool(input_value)
+def enable_submit_button(email):
+    if email and '@' in email and '.' in email:
+        return False  # Enable the button
+    return True  # Disable the button
 
 
 # Callback to save the participant code to the dcc.Store
