@@ -5,10 +5,8 @@ from dash import no_update
 from dash_canvas import DashCanvas
 from dash_iconify import DashIconify
 import csv
-
-
-
-
+import random
+import os
 
 # dash.register_page(__name__,path='/', name='Consent Form')
 
@@ -141,10 +139,12 @@ layout = dbc.Row(
                             dbc.Row(
                                 [
                                     # Empty column to push the button to the right
-                                    dbc.Col(width=10),
+                                    dbc.Col(
+                                        html.Div(id = 'unique-code')
+                                        ,width=10),
                                     # Column for the button
                                     dbc.Col(
-                                        dbc.Button("Start", href="/page_0_Survey", id="proceed-button", disabled=True,
+                                        dbc.Button("Start", href="/page_0_code", id="proceed-button", disabled=True,
                                                    className="btn btn-warning",
                                                    style={'fontFamily': 'optima', 'fontWeight': 600,
                                                           'fontSize': '20px'}),
@@ -167,12 +167,59 @@ layout = dbc.Row(
 
 
 
+def generate_unique_code():
+    while True:
+        new_code = random.randint(1000, 9999)
+        if not is_code_used(new_code):
+            save_code(new_code)
+            return new_code
+
+# Check if the code has already been used
+def is_code_used(code):
+    if not os.path.exists('generated_codes.txt'):
+        return False
+    with open('generated_codes.txt', 'r') as file:
+        used_codes = file.read().splitlines()
+    return str(code) in used_codes
+
+# Save the new unique code to the file
+def save_code(code):
+    with open('generated_codes.txt', 'a') as file:
+        file.write(f"{code}\n")
+
+
+
+
 @callback(
-    Output('proceed-button', 'disabled'),
+    [Output('proceed-button', 'disabled'),
+     Output('unique-code', 'children')],
     [Input('my-checkbox', 'value')]
 )
-def enable_proceed_button(checked_values):
+
+def enable_proceed_button_and_generate_code(checked_values):
     if checked_values == ["   I agree"]:
-        return False  # Enable the button
-    return True
+        unique_code = generate_unique_code()
+        return False, [
+            "Remember your unique participant ID:  ",
+            html.Span(unique_code, style={'color': 'red', 'fontWeight': 'bold'})  # Highlight the unique code
+        ]
+    return True, ""
+
+
+# def enable_proceed_button_and_generate_code(checked_values):
+#     if checked_values == ["   I agree"]:
+#         unique_code = generate_unique_code()
+#         return False, f"Your unique participant ID: {unique_code}"  # Return the unique code
+#     return True, ""  # If not checked, don't display a code
+
+
+#
+# @callback(
+#     Output('proceed-button', 'disabled'),
+#     [Input('my-checkbox', 'value')]
+# )
+# def enable_proceed_button(checked_values):
+#     if checked_values == ["   I agree"]:
+#         return False  # Enable the button
+#     return True
 

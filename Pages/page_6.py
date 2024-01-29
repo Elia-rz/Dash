@@ -9,7 +9,7 @@ layout = dbc.Row(
                 dbc.CardHeader(html.H4("Thank you!", className="card-title text-info", style={'fontFamily': 'optima', 'fontWeight': 400, 'fontSize': '30px'})),
                 dbc.CardBody(
                     [
-                        html.P("If you'd like to participate in our future experiments, please enter your email below.", className="text-dark", style={'fontFamily': 'optima', 'fontWeight': 400, 'fontSize': '18px'}),
+                        html.P("If you'd like to receive 80$ Amazon gift card, please enter your email address. ", className="text-dark", style={'fontFamily': 'optima', 'fontWeight': 400, 'fontSize': '18px'}),
                         dbc.Input(type="email", id="email-input", placeholder="Enter your email", style={'fontFamily': 'optima', 'fontSize': '16px'}),
                         html.Br(),
                         dbc.Button("Submit", id="email-submit-button",disabled=True, className="btn btn-info", style={'fontFamily': 'optima', 'fontWeight': 600, 'fontSize': '18px'}),
